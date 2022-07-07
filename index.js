@@ -100,6 +100,6 @@ app.post("/api/v1/uploadImage",upolad.single('image'),async (req, res) => {
 
 })
 
-app.listen(3001, () => {
+app.listen(process.env.PORT || 3001, () => {
     console.log("server is running at port 3001");
 });
