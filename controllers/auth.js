@@ -82,7 +82,7 @@ const registerController = async (req, res) => {
 
   const userStatus = await newUser.save();
 
-  res.status(201).json({  success: true });
+  res.status(201).json({ message:"Registered",success: true });
   return;
   } catch (error) {
     res.status(500).json(error);
