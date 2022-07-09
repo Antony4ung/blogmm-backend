@@ -55,9 +55,9 @@ const loginController = async (req, res) => {
 const registerController = async (req, res) => {
   
   try {
-    const url = req.protocol + '://' + req.get('host')
+   
 
-    const { name, email, password,rePassword } = req.body;
+    const { name, email, password,rePassword,photoUrl } = req.body;
 
 
     const isEmail = validateEmail(email);
@@ -86,10 +86,7 @@ const registerController = async (req, res) => {
       name: name,
       email: email,
       password: hashedPassword,
-      photoUrl: url + '/uploads/' + req.file.filename,
-      data:{
-        blogs:[]
-      }
+      photoUrl:photoUrl
     });
 
     const userStatus = await newUser.save();

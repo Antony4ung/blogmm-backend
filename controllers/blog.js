@@ -18,20 +18,18 @@ const getAllBlogs = async (req,res,next) => {
 }
 const createBlog = async (req,res,next) => {
     try {
-        console.log({body:req.body,file:req.file})
-
-        const url = req.protocol + '://' + req.get('host')
+        
     
-        const { title, description, author,category,content } = req.body;
+        const { title, description, author,category,content,photoUrl } = req.body;
 
-        if(!title || !description || !content || !author || !category || !req.file ){
+        if(!title || !description || !content || !author || !category || !photoUrl ){
             res.status(400).json({message:"Can't create blog. Fill all require fields"})
             return;
         }
     
     
         const newBlog = new Blog({
-            title, description,content, author,category,photoUrl:url + '/uploads/' + req.file.filename
+            title, description,content, author,category,photoUrl
         });
     
         const status = await newBlog.save();
@@ -46,19 +44,18 @@ const createBlog = async (req,res,next) => {
 const updateBlog = async (req,res,next) => {
     
     try {
-        // console.log({body:req.body,file:req.file})
-
-        const url = req.protocol + '://' + req.get('host')
+        
     
-        const { title, description,category,content,blogId } = req.body;
+        const { title, description,category,content,blogId,photoUrl } = req.body;
 
-        if(!title || !description || !content || !category || !req.file ){
+
+        if(!title || !description || !content || !category || !photoUrl ){
             res.status(400).json({message:"Can't create blog. Fill all require fields"})
             return;
         }
     
         const result = await Blog.findByIdAndUpdate({_id:blogId},{
-            title,description,content,photoUrl:url + '/uploads/' + req.file.filename,category
+            title,description,content,photoUrl,category
         })
     
         res.status(201).json({ message: "blog edited",success:true });
