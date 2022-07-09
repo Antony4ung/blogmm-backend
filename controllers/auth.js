@@ -60,12 +60,12 @@ const registerController = async (req, res) => {
     const { name, email, password,rePassword,photoUrl } = req.body;
 
 
-    const isEmail = validateEmail(email);
+    // const isEmail = validateEmail(email);
 
-    if (!isEmail) {
-      res.status(400).json({ message: "Invalid Email" });
-      return;
-    }
+    // if (!isEmail) {
+    //   res.status(400).json({ message: "Invalid Email" });
+    //   return;
+    // }
 
     const isEmailAlreadyExist = await user.findOne({ email: email });
 
