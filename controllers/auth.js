@@ -9,7 +9,7 @@ const {
 
 const bcrypt = require("bcryptjs");
 const loginController = async (req, res) => {
-  // try {
+  try {
   const { email, password } = req.body;
 
   if (!email || !password) {
@@ -47,10 +47,10 @@ const loginController = async (req, res) => {
     },
   });
   return;
-  // } catch (error) {
-  //   res.status(500).json(error);
-  //   return;
-  // }
+  } catch (error) {
+    res.status(500).json(error);
+    return;
+  }
 };
 
 const registerController = async (req, res) => {

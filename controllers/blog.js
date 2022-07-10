@@ -2,14 +2,19 @@ const Blog = require("../models/blog")
 
 const getAllBlogs = async (req,res,next) => {
     try {
+
+        const PAGE_SIZE = 8;
+        const page = Number(req.query.page || "0");
+        const total = await Blog.countDocuments({});
         
-        const blog = await Blog.find().populate('author','-password -isAdmin')
+
+        const blog = await Blog.find().populate('author','-password -isAdmin').skip(PAGE_SIZE*(page-1)).limit(PAGE_SIZE);
 
         if(!blog){
             res.status(404).json({message:"blogs not found"})
         }
 
-        res.status(200).json({blog})
+        res.status(200).json({totalPages: Math.ceil(total / PAGE_SIZE),blog})
 
     } catch (error) {
         res.status(500).json(error)
@@ -85,15 +90,23 @@ const getBlogById = async (req,res,next) => {
 
 const getBlogByCategory = async (req,res,next) => {
     try {
+
+
+        const PAGE_SIZE = 8;
+        const page = Number(req.query.page || "0");
+        // const total = await Blog.countDocuments({});
+
         const {category} = req.params
-        const blog = await Blog.find({category:category}).populate('author','-password -isAdmin')
+        const blog = await Blog.find({category:category}).populate('author','-password -isAdmin').skip(PAGE_SIZE*(page-1)).limit(PAGE_SIZE)
+
+        const total = blog.length
 
         if(!blog){
             res.status(404).json({message:"blog not found"})
             return
         }
 
-        res.status(200).json({blog})
+        res.status(200).json({totalPages: Math.ceil(total / PAGE_SIZE),blog})
 
     } catch (error) {
         res.status(500).json(error)
