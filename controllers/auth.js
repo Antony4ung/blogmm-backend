@@ -13,14 +13,14 @@ const loginController = async (req, res) => {
   const { email, password } = req.body;
 
   if (!email || !password) {
-    res.status(400).json({ message: "Invalid Credentials" });
+    res.status(401).json({ message: "Invalid Credentials" });
     return;
   }
 
   const userExist = await user.findOne({ email: email });
 
   if (!userExist) {
-    res.status(400).json({ message: "Invalid Credentials" });
+    res.status(401).json({ message: "Invalid Credentials" });
     return;
   }
 
