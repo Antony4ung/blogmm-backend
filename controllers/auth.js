@@ -27,7 +27,7 @@ const loginController = async (req, res) => {
   const isPasswordMatch = await comparePassword(password, userExist.password);
 
   if (!isPasswordMatch) {
-    res.status(400).json({ message: "Invalid Password" });
+    res.status(401).json({ message: "Invalid Password" });
     return;
   }
 
